@@ -35,13 +35,13 @@
 <body>
 <div class="wrap">
   <h1>매일 할 일 WBS</h1>
-  <div class="sub">2026-10-29 ~ 2026-12-02 · 평일 25일 · 체크하면 이 브라우저에 저장돼요</div>
+  <div class="sub">2026-10-29 ~ 2026-12-07 · 평일 28일 · 체크하면 이 브라우저에 저장돼요</div>
   <div>전체 진행률 <b id="pct">0%</b></div>
   <div class="bar"><i id="fill"></i></div>
   <div class="legend">
     <span><span class="tag en">EN</span> 영어 30분</span>
     <span><span class="tag ai">AI</span> AI Agent 실습 (8.ai-agent-40h)</span>
-    <span><span class="tag ros">ROS</span> ROS 실습 (대상 폴더 정해지면 채움)</span>
+    <span><span class="tag ros">ROS</span> ROS 실습 (llm_Agent → 자율주행)</span>
   </div>
   <div id="list"></div>
 </div>
@@ -53,6 +53,7 @@ const EN_WEEK = [
   "LangChain·LangGraph 공식 문서 1단락 읽기 / 모르는 단어 5개 / 3문장 요약",
   "내 프로젝트 영어로 설명하기 연습 (1분 녹음) / 발표 표현 5개 / README 영어 문단 작성",
   "AGENTS.md·SKILL.md 한 단락 영어로 요약 / 메일 표현 5개 / 공모전 소개 영어 메일 1통 쓰기",
+  "ROS 2 공식 문서(docs.ros.org) 튜토리얼 1단락 읽기 / ROS 용어 5개 / 오늘 실습 3문장 영작",
 ];
 // AI Agent: 실습교재 단원 순서대로 하루 1단원
 const AI = [
@@ -70,9 +71,34 @@ const AI = [
   "contest_mail_agent ④: Tavily 키로 실제 검색 + 미리보기, skills/source-intake 절차로 소스 추가",
   "contest_mail_agent ⑤: Gmail 앱 비밀번호로 실제 발송(승인 y), checklist.md 체크",
 ];
+// ROS: llm_Agent,ros 의 ROS2 실전편 → 자율주행,ros 15일 과정 (Mission Manager 는 Nav2 를 배운 9일차 뒤에)
+const RP = "llm_Agent,ros · ROS2_실전편", RA = "자율주행,ros · AMR_AI_Agent_handouts_v3", RM = "llm_Agent,ros · AMR_Agent_Mission_Manager";
+const ROS = [
+  ["1단원 환경 다지기(ros_env.sh, r2r_ws) + 실습 2-1·2-2 카메라·img_publisher", RP],
+  ["실습 2-3 YAML 파라미터·launch + 2-4 HSV 변환기", RP],
+  ["실습 2-5 Canny + 2-6 만화 필터 + 2-7 광학 흐름", RP],
+  ["3단원 TF 원리 + 실습 3-1·3-2·3-3 프레임 브로드캐스트", RP],
+  ["실습 3-4 TF 리스너 거리 + 3-5 RViz Marker·Path", RP],
+  ["4단원 도메인 ID + 실습 4-1·4-2", RP],
+  ["실습 4-3 로봇 2대 제어 + 4-4 domain_bridge", RP],
+  ["5단원 PID 원리 + 실습 5-1·5-2 회전 PID 튜닝", RP],
+  ["실습 5-3 PID 두 개로 위치 이동 + 5-4 마우스 지시", RP],
+  ["실습 5-5 상태 기계 (회전 → 직진 → 최종 자세)", RP],
+  ["6단원 라즈베리 파이 연동 (없으면 6-4 가상 센서만)", RP],
+  ["1일차 AMR 구조와 ROS 2 설치", RA], ["2일차 프로젝트 시작과 센서 관찰 (M0)", RA],
+  ["3일차 Topic·Service 와 로봇 뼈대", RA], ["4일차 Action·Launch·기록 (M1)", RA],
+  ["5일차 센서 데이터 처리와 시각화", RA], ["6일차 SLAM 운영 맵과 검수 (M2)", RA],
+  ["7일차 Vision SLAM 과 시맨틱 맵", RA], ["8일차 Gazebo 월드·AMR 모델", RA],
+  ["9일차 Nav2 운영 — 이름 이동과 성능 측정 (M3)", RA],
+  ["Mission Manager ①: 서비스·액션 원리 + 실습 1 인터페이스 패키지", RM],
+  ["Mission Manager ②: 실습 2 노드 작성 + 실습 3 동작 확인", RM],
+  ["10일차 협로 튜닝·금지구역·이중 안전", RA], ["11일차 작업 계획과 조건 기반 경로 선택", RA],
+  ["12일차 임무 상태 기계와 작업 실행기 (M4)", RA], ["13일차 LLM AI Agent 와 산업 Task 흐름", RA],
+  ["14일차 PDE 와 다중 AMR 교통 제어 (M5)", RA], ["15일차 엘리베이터 연동과 층간 이송 완성 (M6)", RA],
+];
 const START = new Date(2026, 9, 29);
 const days = [];
-for (let d = new Date(START); days.length < AI.length; d.setDate(d.getDate() + 1)) {
+for (let d = new Date(START); days.length < Math.max(AI.length, ROS.length); d.setDate(d.getDate() + 1)) {
   if (d.getDay() === 0 || d.getDay() === 6) continue;
   days.push(new Date(d));
 }
@@ -91,14 +117,14 @@ days.forEach((d, i) => {
   if (i % 5 === 0) {
     weekEl = document.createElement("section");
     weekEl.className = "week";
-    weekEl.innerHTML = `<h2>${w + 1}주차 · ${i < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</h2>`;
+    weekEl.innerHTML = `<h2>${w + 1}주차 · ${fmt(d)} ~</h2>`;
     list.appendChild(weekEl);
   }
   const tasks = [
-    ["en", "EN", `영어 30분 — ${EN_WEEK[w]}`],
-    ["ai", "AI", `${AI[i]} <small>· ${i < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>`],
-    ["ros", "ROS", `ROS 실습 <small>· 대상 폴더 정해지면 채움</small>`],
-  ];
+    ["en", "EN", `영어 30분 — ${EN_WEEK[Math.min(w, EN_WEEK.length - 1)]}`],
+    AI[i] && ["ai", "AI", `${AI[i]} <small>· ${i < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>`],
+    ROS[i] && ["ros", "ROS", `${ROS[i][0]} <small>· ${ROS[i][1]}</small>`],
+  ].filter(Boolean);
   const el = document.createElement("div");
   el.className = "day" + (iso(new Date(d.setHours(12))) === todayIso ? " today" : "");
   el.innerHTML = `<header>Day ${i + 1}<span>${fmt(d)}</span></header>` + tasks.map(([c, t, txt]) => {
