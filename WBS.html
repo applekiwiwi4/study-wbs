@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>매일 할 일 WBS</title>
+<style>
+  :root { --bg:#f7f7f5; --card:#fff; --ink:#1d1d1f; --mute:#6b6b70; --line:#e4e4e0;
+          --en:#2f6fdf; --ai:#1f9d6b; --ros:#c4612a; --done:#b5b5b0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161617; --card:#202022; --ink:#ececee; --mute:#9a9aa0; --line:#333336; --done:#5a5a5e; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 "Pretendard","Malgun Gothic",system-ui,sans-serif; }
+  .wrap { max-width:980px; margin:0 auto; padding:24px 16px 60px; }
+  h1 { margin:0 0 4px; font-size:22px; }
+  .sub { color:var(--mute); margin-bottom:20px; }
+  .bar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin:6px 0 2px; }
+  .bar i { display:block; height:100%; background:var(--ai); width:0; transition:width .3s; }
+  .legend { display:flex; gap:14px; flex-wrap:wrap; margin:14px 0 18px; color:var(--mute); }
+  .tag { display:inline-block; padding:1px 8px; border-radius:10px; color:#fff; font-size:12px; font-weight:600; }
+  .en { background:var(--en); } .ai { background:var(--ai); } .ros { background:var(--ros); }
+  .week { margin-top:22px; }
+  .week h2 { font-size:15px; margin:0 0 8px; color:var(--mute); font-weight:600; }
+  .day { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px; }
+  .day.today { border-color:var(--ai); box-shadow:0 0 0 2px color-mix(in srgb, var(--ai) 25%, transparent); }
+  .day header { display:flex; justify-content:space-between; font-weight:600; margin-bottom:4px; }
+  .day header span { color:var(--mute); font-weight:400; }
+  label { display:flex; gap:8px; align-items:flex-start; padding:3px 0; cursor:pointer; }
+  label input { margin-top:3px; }
+  label.done .txt { color:var(--done); text-decoration:line-through; }
+  .txt small { color:var(--mute); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>매일 할 일 WBS</h1>
+  <div class="sub">2026-10-29 ~ 2026-11-25 · 평일 20일 · 체크하면 이 브라우저에 저장돼요</div>
+  <div>전체 진행률 <b id="pct">0%</b></div>
+  <div class="bar"><i id="fill"></i></div>
+  <div class="legend">
+    <span><span class="tag en">EN</span> 영어 30분</span>
+    <span><span class="tag ai">AI</span> AI Agent 실습 (8.ai-agent-40h)</span>
+    <span><span class="tag ros">ROS</span> ROS 실습 (대상 폴더 정해지면 채움)</span>
+  </div>
+  <div id="list"></div>
+</div>
+<script>
+// 영어: 매일 10분 단어 + 10분 듣기/쉐도잉 + 10분 영작
+const EN_WEEK = [
+  "BBC 6 Minute English 1편 듣기·쉐도잉 / AI 용어 5개 / 오늘 실습 3문장 영작",
+  "VOA Learning English 'Technology' 기사 1개 / AI 용어 5개 / 3문장 영작",
+  "LangChain·LangGraph 공식 문서 1단락 읽기 / 모르는 단어 5개 / 3문장 요약",
+  "내 프로젝트 영어로 설명하기 연습 (1분 녹음) / 발표 표현 5개 / README 영어 문단 작성",
+];
+// AI Agent: 실습교재 단원 순서대로 하루 1단원
+const AI = [
+  "1-1 이론: 오리엔테이션과 무료 도구", "1-2 실습: 개발 환경 설정", "1-3 이론: 생성형 AI와 LLM 기초",
+  "1-4 실습: 첫 LLM 호출 (config.py)", "1-5 이론: LangChain 기초", "1-6 실습: 요약·답변 초안 체인 (draft.py)",
+  "2-1 실습: 문의 자동 분류 (classify.py)", "2-2 이론: RAG", "2-3 실습: 사내 문서 Q&A (rag.py)",
+  "2-4 이론: LangGraph ① 업무 흐름도", "3-1 이론: LangGraph ② 에이전트 설계", "3-2 실습: CS 에이전트 (tools.py, agent.py)",
+  "3-3 이론: GraphRAG", "3-4 실습: 제품 지식그래프", "4-1 실습: Neo4j와 에이전트 연결",
+  "4-2 이론: n8n 업무 자동화", "4-3 실습: n8n 문의 접수 자동화 (api.py)", "4-4 이론: Dify 노코드 AI 앱",
+  "5-1 실습: Dify 고객 챗봇 공개", "5-3 실습: 통합·배포·포트폴리오 (5-2 이론 포함)",
+];
+const START = new Date(2026, 9, 29);
+const days = [];
+for (let d = new Date(START); days.length < AI.length; d.setDate(d.getDate() + 1)) {
+  if (d.getDay() === 0 || d.getDay() === 6) continue;
+  days.push(new Date(d));
+}
+const KEY = "study-wbs-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+const fmt = d => `${d.getMonth()+1}/${d.getDate()} (${"일월화수목금토"[d.getDay()]})`;
+const iso = d => d.toISOString().slice(0, 10);
+const todayIso = iso(new Date(new Date().setHours(12)));
+
+const list = document.getElementById("list");
+let weekEl;
+days.forEach((d, i) => {
+  const w = Math.floor(i / 5);
+  if (i % 5 === 0) {
+    weekEl = document.createElement("section");
+    weekEl.className = "week";
+    weekEl.innerHTML = `<h2>${w + 1}주차 · AI Agent ${w + 1}일차 교재 범위</h2>`;
+    list.appendChild(weekEl);
+  }
+  const tasks = [
+    ["en", "EN", `영어 30분 — ${EN_WEEK[w]}`],
+    ["ai", "AI", `${AI[i]} <small>· AI_Agent_실습교재</small>`],
+    ["ros", "ROS", `ROS 실습 <small>· 대상 폴더 정해지면 채움</small>`],
+  ];
+  const el = document.createElement("div");
+  el.className = "day" + (iso(new Date(d.setHours(12))) === todayIso ? " today" : "");
+  el.innerHTML = `<header>Day ${i + 1}<span>${fmt(d)}</span></header>` + tasks.map(([c, t, txt]) => {
+    const id = `${i}-${c}`;
+    return `<label class="${state[id] ? "done" : ""}"><input type="checkbox" data-id="${id}" ${state[id] ? "checked" : ""}>
+      <span class="txt"><span class="tag ${c}">${t}</span> ${txt}</span></label>`;
+  }).join("");
+  weekEl.appendChild(el);
+});
+
+function update() {
+  const boxes = [...document.querySelectorAll("input[type=checkbox]")];
+  const n = boxes.filter(b => b.checked).length;
+  const p = Math.round(n / boxes.length * 100);
+  document.getElementById("pct").textContent = `${p}% (${n}/${boxes.length})`;
+  document.getElementById("fill").style.width = p + "%";
+}
+list.addEventListener("change", e => {
+  const b = e.target; if (!b.dataset.id) return;
+  state[b.dataset.id] = b.checked; save();
+  b.closest("label").classList.toggle("done", b.checked);
+  update();
+});
+update();
+document.querySelector(".today")?.scrollIntoView({ block: "center" });
+</script>
+</body>
+</html>
