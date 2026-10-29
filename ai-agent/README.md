@@ -25,3 +25,15 @@
 | 18 | 11/23 | 4-4 이론: Dify 노코드 AI 앱 |
 | 19 | 11/24 | 5-1 실습: Dify 고객 챗봇 공개 |
 | 20 | 11/25 | 5-3 실습: 통합·배포·포트폴리오 (5-2 이론 포함) |
+
+## 교재 끝난 뒤: contest_mail_agent
+
+대상: `8.ai-agent-40h/contest_mail_agent` (AI 공모전·해커톤 메일 알림 에이전트)
+
+| Day | 날짜 | 할 일 |
+|---|---|---|
+| 21 | 11/26 | README·AGENTS.md·PLAN.md 읽기, 설치, `python main.py --offline --today 2026-11-02` |
+| 22 | 11/27 | state.py·rules.py 읽기, `python evals/run_evals.py` 로 하네스 ON/OFF 비교 |
+| 23 | 11/30 | tools.py·nodes.py·graph.py — 조건부 엣지 2개와 승인 전 interrupt 이해 |
+| 24 | 12/1 | Tavily 키로 실제 검색 + 미리보기, skills/source-intake 절차로 소스 추가 |
+| 25 | 12/2 | Gmail 앱 비밀번호로 실제 발송(승인 y), checklist.md 체크 |

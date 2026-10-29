@@ -35,7 +35,7 @@
 <body>
 <div class="wrap">
   <h1>매일 할 일 WBS</h1>
-  <div class="sub">2026-10-29 ~ 2026-11-25 · 평일 20일 · 체크하면 이 브라우저에 저장돼요</div>
+  <div class="sub">2026-10-29 ~ 2026-12-02 · 평일 25일 · 체크하면 이 브라우저에 저장돼요</div>
   <div>전체 진행률 <b id="pct">0%</b></div>
   <div class="bar"><i id="fill"></i></div>
   <div class="legend">
@@ -52,6 +52,7 @@ const EN_WEEK = [
   "VOA Learning English 'Technology' 기사 1개 / AI 용어 5개 / 3문장 영작",
   "LangChain·LangGraph 공식 문서 1단락 읽기 / 모르는 단어 5개 / 3문장 요약",
   "내 프로젝트 영어로 설명하기 연습 (1분 녹음) / 발표 표현 5개 / README 영어 문단 작성",
+  "AGENTS.md·SKILL.md 한 단락 영어로 요약 / 메일 표현 5개 / 공모전 소개 영어 메일 1통 쓰기",
 ];
 // AI Agent: 실습교재 단원 순서대로 하루 1단원
 const AI = [
@@ -62,6 +63,12 @@ const AI = [
   "3-3 이론: GraphRAG", "3-4 실습: 제품 지식그래프", "4-1 실습: Neo4j와 에이전트 연결",
   "4-2 이론: n8n 업무 자동화", "4-3 실습: n8n 문의 접수 자동화 (api.py)", "4-4 이론: Dify 노코드 AI 앱",
   "5-1 실습: Dify 고객 챗봇 공개", "5-3 실습: 통합·배포·포트폴리오 (5-2 이론 포함)",
+  // 교재 끝나면 contest_mail_agent
+  "contest_mail_agent ①: README·AGENTS.md·PLAN.md 읽기, 설치, <code>python main.py --offline --today 2026-11-02</code>",
+  "contest_mail_agent ②: state.py·rules.py 읽기, <code>python evals/run_evals.py</code> 로 하네스 ON/OFF 비교",
+  "contest_mail_agent ③: tools.py·nodes.py·graph.py — 조건부 엣지 2개와 승인 전 interrupt 이해",
+  "contest_mail_agent ④: Tavily 키로 실제 검색 + 미리보기, skills/source-intake 절차로 소스 추가",
+  "contest_mail_agent ⑤: Gmail 앱 비밀번호로 실제 발송(승인 y), checklist.md 체크",
 ];
 const START = new Date(2026, 9, 29);
 const days = [];
@@ -84,12 +91,12 @@ days.forEach((d, i) => {
   if (i % 5 === 0) {
     weekEl = document.createElement("section");
     weekEl.className = "week";
-    weekEl.innerHTML = `<h2>${w + 1}주차 · AI Agent ${w + 1}일차 교재 범위</h2>`;
+    weekEl.innerHTML = `<h2>${w + 1}주차 · ${i < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</h2>`;
     list.appendChild(weekEl);
   }
   const tasks = [
     ["en", "EN", `영어 30분 — ${EN_WEEK[w]}`],
-    ["ai", "AI", `${AI[i]} <small>· AI_Agent_실습교재</small>`],
+    ["ai", "AI", `${AI[i]} <small>· ${i < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>`],
     ["ros", "ROS", `ROS 실습 <small>· 대상 폴더 정해지면 채움</small>`],
   ];
   const el = document.createElement("div");
