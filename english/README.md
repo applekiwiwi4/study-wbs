@@ -14,3 +14,4 @@
 | 2주 | VOA Learning English – Technology | 쉬운 기술 기사 읽기 |
 | 3주 | LangChain / LangGraph 공식 문서 | 실제 개발 문서 읽기 |
 | 4주 | 내 프로젝트 영어 설명 (1분 녹음) | 포트폴리오 발표 준비 |
+| 5주 | contest_mail_agent 문서(AGENTS.md, SKILL.md) | 영어 메일 쓰기 |
