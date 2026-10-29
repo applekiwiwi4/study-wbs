@@ -41,6 +41,7 @@
   .quiz button { font:inherit; margin:3px 4px 0 0; padding:3px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); cursor:pointer; }
   .quiz button.ok { background:#1f9d6b; border-color:#1f9d6b; color:#fff; }
   .quiz button.no { background:#d0473a; border-color:#d0473a; color:#fff; }
+  .dialog { white-space:pre-line; }
   .flip { cursor:pointer; }
   .flip td:nth-child(2) { color:transparent; background:var(--line); border-radius:4px; }
   .flip.show td:nth-child(2) { color:inherit; background:none; }
@@ -57,7 +58,7 @@
   <div>전체 진행률 <b id="pct">0%</b></div>
   <div class="bar"><i id="fill"></i></div>
   <div class="legend">
-    <span><span class="tag en">EN</span> 영어 30분</span>
+    <span><span class="tag en">EN</span> 생활영어 30분</span>
     <span><span class="tag ai">AI</span> AI Agent 실습 (8.ai-agent-40h)</span>
     <span><span class="tag ros">ROS</span> ROS 실습 (llm_Agent → 자율주행)</span>
     <span><span class="tag rev">복습</span> 일요일 따라잡기</span>
@@ -171,15 +172,15 @@ function openLinks(ls) {
 function esc(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
 function lessonHtml(l) {
   return `<details class="lesson"><summary>오늘 영어 펼치기</summary>
-    <h4>① 영상 10분</h4><a href="${BBC + l.v}" target="_blank" rel="noopener">BBC 6 Minute English — ${esc(l.vt)}</a>
-    <h4>② 단어 5개</h4><table>${l.w.map(([w, m, e]) => `<tr><td>${esc(w)}</td><td>${esc(m)}</td><td>${esc(e)}</td></tr>`).join("")}</table>
-    <h4>③ 읽기</h4><div>${esc(l.r)}</div>
+    <h4>① 영상 10분</h4><a href="${BBC + l.v}" target="_blank" rel="noopener">BBC Real Easy English — ${esc(l.vt)}</a>
+    <h4>② 표현 5개</h4><table>${l.w.map(([w, m, e]) => `<tr><td>${esc(w)}</td><td>${esc(m)}</td><td>${esc(e)}</td></tr>`).join("")}</table>
+    <h4>③ 대화문 (소리 내어 읽기)</h4><div class="dialog">${esc(l.r)}</div>
     <h4>④ 확인문제</h4>${l.q.map(([q, opts, ans], k) => `<div class="quiz">${k + 1}. ${esc(q)}<br>${
       opts.map((o, j) => `<button data-ok="${j === ans}">${esc(o)}</button>`).join("")}</div>`).join("")}
-    <h4>⑤ 영작 3문장</h4><div>${esc(l.wr)}</div></details>`;
+    <h4>⑤ 말하기·쓰기 3문장</h4><div>${esc(l.wr)}</div></details>`;
 }
 function reviewHtml(ls) {
-  return `<details class="lesson"><summary>이번 주 단어 펼치기 (줄을 누르면 뜻이 보여요)</summary><table>${
+  return `<details class="lesson"><summary>이번 주 표현 펼치기 (줄을 누르면 뜻이 보여요)</summary><table>${
     ls.flatMap(l => l.w).map(([w, m]) => `<tr class="flip"><td>${esc(w)}</td><td>${esc(m)}</td></tr>`).join("")}</table>
     <h4>이번 주 확인문제 다시 풀기</h4>${ls.flatMap(l => l.q).map(([q, opts, ans], k) => `<div class="quiz">${k + 1}. ${esc(q)}<br>${
       opts.map((o, j) => `<button data-ok="${j === ans}">${esc(o)}</button>`).join("")}</div>`).join("")}</details>`;
@@ -203,8 +204,8 @@ days.forEach(({ date, buffer, ai, aiFiles, ros, lesson }, i) => {
   if (lesson) weekLessons.push(lesson);
   const review = buffer ? weekLessons.splice(0) : [];
   const tasks = [
-    lesson && ["en", "EN", `영어 30분 — ${lesson.t}`, lessonHtml(lesson)],
-    buffer && review.length && ["en", "EN", `영어 복습 — 이번 주 단어 ${review.length * 5}개 다시 보기`, reviewHtml(review)],
+    lesson && ["en", "EN", `생활영어 30분 — ${lesson.t}`, lessonHtml(lesson)],
+    buffer && review.length && ["en", "EN", `생활영어 복습 — 이번 주 표현 ${review.length * 5}개 다시 보기`, reviewHtml(review)],
     buffer && ["rev", "복습", "새 진도 없음 — 이번 주 밀린 것 따라잡기, 막힌 부분 다시 보기"],
     ai && ["ai", "AI", `${ai} <small>· ${AI.indexOf(ai) < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>${openLinks(aiFiles)}`],
     ros && ["ros", "ROS", `${ros[0]} <small>· ${ros[1]}</small>${openLinks(ros[2])}`],

@@ -4,7 +4,7 @@
 
 | 파트 | 내용 |
 |---|---|
-| [english](english/README.md) | 영어 하루 30분 (하루치 단어·읽기·확인문제·영상 링크) |
+| [english](english/README.md) | 생활영어 하루 30분 (하루치 표현·대화문·확인문제·영상 링크) |
 | [ai-agent](ai-agent/README.md) | AI Agent 실습 하루 1단원 → contest_mail_agent |
 | [logs](logs/README.md) | 매일 학습 일지 · 주간 정리 |
 | [ros](ros/README.md) | ROS 실습: llm_Agent,ros → 자율주행,ros |
