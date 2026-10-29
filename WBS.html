@@ -30,6 +30,20 @@
   label { display:flex; gap:8px; align-items:flex-start; padding:3px 0; cursor:pointer; }
   label input { margin-top:3px; }
   label.done .txt { color:var(--done); text-decoration:line-through; }
+  details.lesson { margin:2px 0 6px 26px; border-left:3px solid var(--en); padding:2px 0 2px 12px; }
+  details.lesson summary { cursor:pointer; color:var(--en); font-weight:600; }
+  details.lesson h4 { margin:10px 0 4px; font-size:13px; color:var(--mute); }
+  details.lesson table { border-collapse:collapse; width:100%; }
+  details.lesson td { border-top:1px solid var(--line); padding:4px 6px; vertical-align:top; }
+  details.lesson td:first-child { font-weight:600; white-space:nowrap; }
+  details.lesson a { color:var(--en); }
+  .quiz { margin:6px 0; }
+  .quiz button { font:inherit; margin:3px 4px 0 0; padding:3px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); cursor:pointer; }
+  .quiz button.ok { background:#1f9d6b; border-color:#1f9d6b; color:#fff; }
+  .quiz button.no { background:#d0473a; border-color:#d0473a; color:#fff; }
+  .flip { cursor:pointer; }
+  .flip td:nth-child(2) { color:transparent; background:var(--line); border-radius:4px; }
+  .flip.show td:nth-child(2) { color:inherit; background:none; }
   .txt small { color:var(--mute); }
 </style>
 </head>
@@ -43,20 +57,12 @@
     <span><span class="tag en">EN</span> 영어 30분</span>
     <span><span class="tag ai">AI</span> AI Agent 실습 (8.ai-agent-40h)</span>
     <span><span class="tag ros">ROS</span> ROS 실습 (llm_Agent → 자율주행)</span>
-    <span><span class="tag rev">복습</span> 금요일 따라잡기</span>
+    <span><span class="tag rev">복습</span> 일요일 따라잡기</span>
   </div>
   <div id="list"></div>
 </div>
+<script src="english/lessons.js"></script>
 <script>
-// 영어: 매일 10분 단어 + 10분 듣기/쉐도잉 + 10분 영작
-const EN_WEEK = [
-  "BBC 6 Minute English 1편 듣기·쉐도잉 / AI 용어 5개 / 오늘 실습 3문장 영작",
-  "VOA Learning English 'Technology' 기사 1개 / AI 용어 5개 / 3문장 영작",
-  "LangChain·LangGraph 공식 문서 1단락 읽기 / 모르는 단어 5개 / 3문장 요약",
-  "내 프로젝트 영어로 설명하기 연습 (1분 녹음) / 발표 표현 5개 / README 영어 문단 작성",
-  "AGENTS.md·SKILL.md 한 단락 영어로 요약 / 메일 표현 5개 / 공모전 소개 영어 메일 1통 쓰기",
-  "ROS 2 공식 문서(docs.ros.org) 튜토리얼 1단락 읽기 / ROS 용어 5개 / 오늘 실습 3문장 영작",
-];
 // AI Agent: 실습교재 단원 순서대로 하루 1단원
 const AI = [
   "1-1 이론: 오리엔테이션과 무료 도구", "1-2 실습: 개발 환경 설정", "1-3 이론: 생성형 AI와 LLM 기초",
@@ -101,17 +107,15 @@ const ROS = [
   ["Mission Manager ②: 실습 2 노드 작성 + 실습 3 동작 확인", RM],
   ...LIFT.slice(9).flatMap(split),
 ];
-// 월~목만 새 진도, 금요일은 밀린 것·복습, 주말·공휴일은 쉼
-const HOLIDAYS = ["2026-12-25", "2027-01-01"];
+// 매일 공부: 월~토 진도, 일요일은 밀린 것·복습
 const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const days = [];
-for (let d = new Date(2026, 9, 29, 12), ai = 0, ros = 0; ai < AI.length || ros < ROS.length; d.setDate(d.getDate() + 1)) {
-  const wd = d.getDay();
-  if (wd === 0 || wd === 6 || HOLIDAYS.includes(ymd(d))) continue;
-  days.push(wd === 5 ? { date: new Date(d), buffer: true } : { date: new Date(d), ai: AI[ai++], ros: ROS[ros++] });
+for (let d = new Date(2026, 9, 29, 12), n = 0; n < Math.max(AI.length, ROS.length, EN_LESSONS.length); d.setDate(d.getDate() + 1)) {
+  days.push(d.getDay() === 0 ? { date: new Date(d), buffer: true }
+    : { date: new Date(d), ai: AI[n], ros: ROS[n], lesson: EN_LESSONS[n++] });
 }
 document.getElementById("range").textContent =
-  `${ymd(days[0].date)} ~ ${ymd(days[days.length - 1].date)} · 월~목 진도, 금요일은 밀린 것·복습`;
+  `${ymd(days[0].date)} ~ ${ymd(days[days.length - 1].date)} · 매일 공부, 일요일은 밀린 것·복습`;
 
 const KEY = "study-wbs-v2";
 let state = {};
@@ -121,8 +125,31 @@ const fmt = d => `${d.getMonth()+1}/${d.getDate()} (${"일월화수목금토"[d.
 const today = ymd(new Date());
 
 const list = document.getElementById("list");
-let weekEl, w = -1, en = 0;
-days.forEach(({ date, buffer, ai, ros }, i) => {
+function esc(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function lessonHtml(l) {
+  return `<details class="lesson"><summary>오늘 영어 펼치기</summary>
+    <h4>① 영상 10분</h4><a href="${BBC + l.v}" target="_blank" rel="noopener">BBC 6 Minute English — ${esc(l.vt)}</a>
+    <h4>② 단어 5개</h4><table>${l.w.map(([w, m, e]) => `<tr><td>${esc(w)}</td><td>${esc(m)}</td><td>${esc(e)}</td></tr>`).join("")}</table>
+    <h4>③ 읽기</h4><div>${esc(l.r)}</div>
+    <h4>④ 확인문제</h4>${l.q.map(([q, opts, ans], k) => `<div class="quiz">${k + 1}. ${esc(q)}<br>${
+      opts.map((o, j) => `<button data-ok="${j === ans}">${esc(o)}</button>`).join("")}</div>`).join("")}
+    <h4>⑤ 영작 3문장</h4><div>${esc(l.wr)}</div></details>`;
+}
+function reviewHtml(ls) {
+  return `<details class="lesson"><summary>이번 주 단어 펼치기 (줄을 누르면 뜻이 보여요)</summary><table>${
+    ls.flatMap(l => l.w).map(([w, m]) => `<tr class="flip"><td>${esc(w)}</td><td>${esc(m)}</td></tr>`).join("")}</table>
+    <h4>이번 주 확인문제 다시 풀기</h4>${ls.flatMap(l => l.q).map(([q, opts, ans], k) => `<div class="quiz">${k + 1}. ${esc(q)}<br>${
+      opts.map((o, j) => `<button data-ok="${j === ans}">${esc(o)}</button>`).join("")}</div>`).join("")}</details>`;
+}
+list.addEventListener("click", e => {
+  const b = e.target.closest(".quiz button");
+  if (b) { b.classList.add(b.dataset.ok === "true" ? "ok" : "no"); return; }
+  const r = e.target.closest(".flip");
+  if (r) r.classList.toggle("show");
+});
+
+let weekEl, w = -1, weekLessons = [];
+days.forEach(({ date, buffer, ai, ros, lesson }, i) => {
   if (!weekEl || date.getDay() === 1) {
     w++;
     weekEl = document.createElement("section");
@@ -130,20 +157,21 @@ days.forEach(({ date, buffer, ai, ros }, i) => {
     weekEl.innerHTML = `<h2>${w + 1}주차 · ${fmt(date)} ~</h2>`;
     list.appendChild(weekEl);
   }
-  // 영어 자료는 그날 진도에 맞춘다: 1~4주 순서대로 → contest_mail_agent 기간 → ROS만 남은 기간
-  if (!buffer) en = !ai ? 5 : AI.indexOf(ai) >= 20 ? 4 : Math.min(w, 3);
+  if (lesson) weekLessons.push(lesson);
+  const review = buffer ? weekLessons.splice(0) : [];
   const tasks = [
-    ["en", "EN", `영어 30분 — ${EN_WEEK[en]}`],
+    lesson && ["en", "EN", `영어 30분 — ${lesson.t}`, lessonHtml(lesson)],
+    buffer && review.length && ["en", "EN", `영어 복습 — 이번 주 단어 ${review.length * 5}개 다시 보기`, reviewHtml(review)],
     buffer && ["rev", "복습", "새 진도 없음 — 이번 주 밀린 것 따라잡기, 막힌 부분 다시 보기"],
     ai && ["ai", "AI", `${ai} <small>· ${AI.indexOf(ai) < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>`],
     ros && ["ros", "ROS", `${ros[0]} <small>· ${ros[1]}</small>`],
   ].filter(Boolean);
   const el = document.createElement("div");
   el.className = "day" + (buffer ? " buffer" : "") + (ymd(date) === today ? " today" : "");
-  el.innerHTML = `<header>${fmt(date)}<span>${buffer ? "복습일" : ""}</span></header>` + tasks.map(([c, t, txt]) => {
+  el.innerHTML = `<header>${fmt(date)}<span>${buffer ? "복습일" : ""}</span></header>` + tasks.map(([c, t, txt, more]) => {
     const id = `${ymd(date)}-${c}`;
     return `<label class="${state[id] ? "done" : ""}"><input type="checkbox" data-id="${id}" ${state[id] ? "checked" : ""}>
-      <span class="txt"><span class="tag ${c}">${t}</span> ${txt}</span></label>`;
+      <span class="txt"><span class="tag ${c}">${t}</span> ${txt}</span></label>${more || ""}`;
   }).join("");
   weekEl.appendChild(el);
 });
