@@ -1,60 +1,61 @@
-# 영어 공부 (하루 30분)
+# 생활영어 (하루 30분)
 
 하루치 내용은 [lessons.js](lessons.js) 에 있고, `WBS.html` 에서 그날 칸의 "오늘 영어 펼치기"를 누르면 보인다.
-그날 AI Agent·ROS 실습 주제에 맞춘 영어로 짰다. 일요일은 그 주 단어와 확인문제를 다시 푼다.
+주제는 식사·날씨·쇼핑·여행·병원·면접 같은 일상 대화이고, 영상은 같은 주제의 BBC Real Easy English 에피소드다.
+일요일은 그 주 표현과 확인문제를 다시 푼다.
 
 ## 하루 순서
 | 시간 | 할 일 |
 |---|---|
-| 10분 | ① BBC 6 Minute English 영상 1편 (링크) — 듣고 마음에 드는 문장 3개 따라 말하기 |
-| 5분 | ② 오늘 단어 5개 (뜻·예문) |
-| 5분 | ③ 짧은 읽기 (3문장) |
+| 10분 | ① BBC Real Easy English 영상 1편 (링크) — 듣고 마음에 드는 문장 3개 따라 말하기 |
+| 5분 | ② 오늘 표현 5개 (뜻·예문) |
+| 5분 | ③ 짧은 대화문 소리 내어 읽기 |
 | 5분 | ④ 확인문제 3개 (누르면 정답/오답 표시) |
-| 5분 | ⑤ 영작 3문장 |
+| 5분 | ⑤ 말하기·쓰기 3문장 |
 
 ## 날짜별 주제와 영상
 | Day | 날짜 | 주제 | 영상 |
 |---|---|---|---|
-| 1 | 10/29 (목) | Free tools for AI | [What can't computers do?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-170928) |
-| 2 | 10/30 (금) | Setting up the environment | [Is technology always the solution?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180719) |
-| 3 | 10/31 (토) | What is an LLM? | [Should we fear chatbots?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2023/ep-230706) |
-| 4 | 11/2 (월) | Your first LLM call | [Talking to machines](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180607) |
-| 5 | 11/3 (화) | LangChain basics | [Algorithms](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-211223) |
-| 6 | 11/4 (수) | Drafting replies with a chain | [Call centres: Are you talking to AI?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2024/ep-241219) |
-| 7 | 11/5 (목) | Classifying inquiries | [Faking it: Computers that spot a real smile](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-190919) |
-| 8 | 11/6 (금) | What is RAG? | [Why we forget the things we learn](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-211118) |
-| 9 | 11/7 (토) | Q&A over company documents | [The technology of translation](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2022/ep-220609) |
-| 10 | 11/9 (월) | LangGraph: workflows as code | [What is the future of work?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2024/ep-240201) |
-| 11 | 11/10 (화) | Designing an agent | [Can AI have a mind of its own?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2023/ep-230126) |
-| 12 | 11/11 (수) | Building the CS agent | [Can we trust a smart speaker?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-190509) |
-| 13 | 11/12 (목) | GraphRAG | [How reading shapes your brain](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2026/ep-260514) |
-| 14 | 11/13 (금) | A product knowledge graph | [Rise of the machines](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180125) |
-| 15 | 11/14 (토) | Connecting Neo4j | [Digital help for blind people](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-210318) |
-| 16 | 11/16 (월) | Automating work with n8n | [Flexible working](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-210715) |
-| 17 | 11/17 (화) | n8n: inquiry intake | [Could you be a victim of online fraud?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-201112) |
-| 18 | 11/18 (수) | No-code AI apps with Dify | [Can apps teach you a language?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2026/ep-260910) |
-| 19 | 11/19 (목) | Publishing a customer chatbot | [Would you like a robot companion?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2025/ep-250918) |
-| 20 | 11/20 (금) | Deploying and your portfolio | [Are you unhappy at work?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2023/ep-230817) |
-| 21 | 11/21 (토) | Contest mail agent: overview | [Working for yourself](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-210211) |
-| 22 | 11/23 (월) | Rules and evaluation | [AI to reduce animal testing](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2024/ep-240718) |
-| 23 | 11/24 (화) | The graph and human approval | [Restoring trust in science](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2022/ep-220630) |
-| 24 | 11/25 (수) | Real web search | [Is the internet good or bad?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180426) |
-| 25 | 11/26 (목) | Sending the real email | [Is talking on the phone embarrassing?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-190613) |
-| 26 | 11/27 (금) | Gazebo world and robot model | [Robot Artists](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-210916) |
-| 27 | 11/28 (토) | Robot model and live changes | [The rise of drones](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180215) |
-| 28 | 11/30 (월) | Nav2: going to named places | [Finding your way in space](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2022/ep-220519) |
-| 29 | 12/1 (화) | Measuring navigation performance | [Transport of the future](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180208) |
-| 30 | 12/2 (수) | Services and actions | [Can robots care for us?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-191121) |
-| 31 | 12/3 (목) | The Mission Manager node | [Robot therapist](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180308) |
-| 32 | 12/4 (금) | Narrow paths and keep-out zones | [Sharing the road with driverless cars](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2026/ep-260820) |
-| 33 | 12/5 (토) | Safety layers | [E-rickshaws driving away pollution](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2024/ep-240606) |
-| 34 | 12/7 (월) | Task planning | [A future without doctors?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-210819) |
-| 35 | 12/8 (화) | Choosing a route by conditions | [Smart tech and climate change](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-211007) |
-| 36 | 12/9 (수) | Mission state machine | [Tech that refuses to die](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2024/ep-241017) |
-| 37 | 12/10 (목) | The task executor | [Do you need to upgrade your phone?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-171130) |
-| 38 | 12/11 (금) | LLM agent for robots | [Food made in space](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-200723) |
-| 39 | 12/12 (토) | From words to tasks | [Is technology harmful to youngsters?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-210906) |
-| 40 | 12/14 (월) | People detection and slowing down | [Body language online](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-211209) |
-| 41 | 12/15 (화) | Traffic control for two robots | [Are smartphones killing cameras?](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-180823) |
-| 42 | 12/16 (수) | Elevator interface (ICD) | [Shocking facts about electricity](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english/ep-200514) |
-| 43 | 12/17 (목) | Project LIFT complete | [Learning lessons from the Moon](https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2023/ep-231221) |
+| 1 | 10/29 (목) | Breakfast | [Talking about breakfast](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251107) |
+| 2 | 10/30 (금) | Coffee | [Talking about coffee](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260821) |
+| 3 | 10/31 (토) | Halloween | [Talking about Halloween](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251031) |
+| 4 | 11/2 (월) | Weekends | [Talking about weekends](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260320) |
+| 5 | 11/3 (화) | Snacks | [Talking about snacks](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251003) |
+| 6 | 11/4 (수) | Dinner | [Talking about dinner](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251212) |
+| 7 | 11/5 (목) | Housework | [Talking about housework](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260828) |
+| 8 | 11/6 (금) | Housemates | [Talking about housemates](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/250905) |
+| 9 | 11/7 (토) | Moving house | [Talking about moving house](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260626) |
+| 10 | 11/9 (월) | Phone habits | [Talking about phone habits](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260703) |
+| 11 | 11/10 (화) | Naps | [Talking about naps](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251114) |
+| 12 | 11/11 (수) | Relaxing | [Talking about relaxing](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251017) |
+| 13 | 11/12 (목) | Rain | [Talking about rain](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260306) |
+| 14 | 11/13 (금) | Hot weather | [Talking about hot weather](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260612) |
+| 15 | 11/14 (토) | Autumn | [Talking about autumn](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260925) |
+| 16 | 11/16 (월) | Sunshine | [Talking about sunshine](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260410) |
+| 17 | 11/17 (화) | Driving | [Talking about driving](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251010) |
+| 18 | 11/18 (수) | Airports | [Talking about airports](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/261002) |
+| 19 | 11/19 (목) | Cities | [Talking about cities](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260731) |
+| 20 | 11/20 (금) | Sightseeing | [Talking about British landmarks](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/261016) |
+| 21 | 11/21 (토) | The cinema | [Talking about the cinema](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/261009) |
+| 22 | 11/23 (월) | Books | [Talking about books](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260403) |
+| 23 | 11/24 (화) | Playing sport | [Talking about playing sport](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260227) |
+| 24 | 11/25 (수) | Watching sports | [Talking about watching sports](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251128) |
+| 25 | 11/26 (목) | The dentist | [Talking about the dentist](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260501) |
+| 26 | 11/27 (금) | At the hair salon | [Talking about hair](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260717) |
+| 27 | 11/28 (토) | Complaining | [Talking about complaining](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260904) |
+| 28 | 11/30 (월) | Saving money | [Talking about saving money](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/250919) |
+| 29 | 12/1 (화) | Work | [Talking about work](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260417) |
+| 30 | 12/2 (수) | Hard jobs | [Talking about hard jobs](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260918) |
+| 31 | 12/3 (목) | Job interviews | [Talking about job interviews](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/261023) |
+| 32 | 12/4 (금) | Speaking languages | [Talking about speaking languages](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260130) |
+| 33 | 12/5 (토) | Memory | [Talking about memory](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260424) |
+| 34 | 12/7 (월) | Bad habits | [Talking about bad habits](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251121) |
+| 35 | 12/8 (화) | Fears | [Talking about fears](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/250926) |
+| 36 | 12/9 (수) | Happiness | [Talking about happiness](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/250912) |
+| 37 | 12/10 (목) | Laughing | [Talking about laughing](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251219) |
+| 38 | 12/11 (금) | Old friends | [Talking about old friends](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260605) |
+| 39 | 12/12 (토) | Birthdays | [Talking about birthdays](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260220) |
+| 40 | 12/14 (월) | Family | [Talking about family trees](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260724) |
+| 41 | 12/15 (화) | Desserts | [Talking about desserts](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260911) |
+| 42 | 12/16 (수) | Winter | [Talking about winter](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/251205) |
+| 43 | 12/17 (목) | Your year and resolutions | [Talking about New Year's resolutions](https://www.bbc.co.uk/learningenglish/english/features/real-easy-english/260102) |
