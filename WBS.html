@@ -19,7 +19,8 @@
   .bar i { display:block; height:100%; background:var(--ai); width:0; transition:width .3s; }
   .legend { display:flex; gap:14px; flex-wrap:wrap; margin:14px 0 18px; color:var(--mute); }
   .tag { display:inline-block; padding:1px 8px; border-radius:10px; color:#fff; font-size:12px; font-weight:600; }
-  .en { background:var(--en); } .ai { background:var(--ai); } .ros { background:var(--ros); }
+  .en { background:var(--en); } .ai { background:var(--ai); } .ros { background:var(--ros); } .rev { background:#8a63c9; }
+  .day.buffer { background:transparent; border-style:dashed; }
   .week { margin-top:22px; }
   .week h2 { font-size:15px; margin:0 0 8px; color:var(--mute); font-weight:600; }
   .day { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px; }
@@ -35,13 +36,14 @@
 <body>
 <div class="wrap">
   <h1>매일 할 일 WBS</h1>
-  <div class="sub">2026-10-29 ~ 2026-12-07 · 평일 28일 · 체크하면 이 브라우저에 저장돼요</div>
+  <div class="sub"><span id="range"></span> · 체크하면 이 브라우저에 저장돼요</div>
   <div>전체 진행률 <b id="pct">0%</b></div>
   <div class="bar"><i id="fill"></i></div>
   <div class="legend">
     <span><span class="tag en">EN</span> 영어 30분</span>
     <span><span class="tag ai">AI</span> AI Agent 실습 (8.ai-agent-40h)</span>
     <span><span class="tag ros">ROS</span> ROS 실습 (llm_Agent → 자율주행)</span>
+    <span><span class="tag rev">복습</span> 금요일 따라잡기</span>
   </div>
   <div id="list"></div>
 </div>
@@ -72,7 +74,16 @@ const AI = [
   "contest_mail_agent ⑤: Gmail 앱 비밀번호로 실제 발송(승인 y), checklist.md 체크",
 ];
 // ROS: llm_Agent,ros 의 ROS2 실전편 → 자율주행,ros 15일 과정 (Mission Manager 는 Nav2 를 배운 9일차 뒤에)
+// 자율주행 교재 하루치는 이틀에 나눠서 한다
 const RP = "llm_Agent,ros · ROS2_실전편", RA = "자율주행,ros · AMR_AI_Agent_handouts_v3", RM = "llm_Agent,ros · AMR_Agent_Mission_Manager";
+const LIFT = [
+  "1일차 AMR 구조와 ROS 2 설치", "2일차 프로젝트 시작과 센서 관찰 (M0)", "3일차 Topic·Service 와 로봇 뼈대",
+  "4일차 Action·Launch·기록 (M1)", "5일차 센서 데이터 처리와 시각화", "6일차 SLAM 운영 맵과 검수 (M2)",
+  "7일차 Vision SLAM 과 시맨틱 맵", "8일차 Gazebo 월드·AMR 모델", "9일차 Nav2 운영 — 이름 이동과 성능 측정 (M3)",
+  "10일차 협로 튜닝·금지구역·이중 안전", "11일차 작업 계획과 조건 기반 경로 선택", "12일차 임무 상태 기계와 작업 실행기 (M4)",
+  "13일차 LLM AI Agent 와 산업 Task 흐름", "14일차 PDE 와 다중 AMR 교통 제어 (M5)", "15일차 엘리베이터 연동과 층간 이송 완성 (M6)",
+];
+const split = t => [[`${t} ① 이론·실습 준비`, RA], [`${t} ② 실습·정리`, RA]];
 const ROS = [
   ["1단원 환경 다지기(ros_env.sh, r2r_ws) + 실습 2-1·2-2 카메라·img_publisher", RP],
   ["실습 2-3 YAML 파라미터·launch + 2-4 HSV 변환기", RP],
@@ -85,50 +96,52 @@ const ROS = [
   ["실습 5-3 PID 두 개로 위치 이동 + 5-4 마우스 지시", RP],
   ["실습 5-5 상태 기계 (회전 → 직진 → 최종 자세)", RP],
   ["6단원 라즈베리 파이 연동 (없으면 6-4 가상 센서만)", RP],
-  ["1일차 AMR 구조와 ROS 2 설치", RA], ["2일차 프로젝트 시작과 센서 관찰 (M0)", RA],
-  ["3일차 Topic·Service 와 로봇 뼈대", RA], ["4일차 Action·Launch·기록 (M1)", RA],
-  ["5일차 센서 데이터 처리와 시각화", RA], ["6일차 SLAM 운영 맵과 검수 (M2)", RA],
-  ["7일차 Vision SLAM 과 시맨틱 맵", RA], ["8일차 Gazebo 월드·AMR 모델", RA],
-  ["9일차 Nav2 운영 — 이름 이동과 성능 측정 (M3)", RA],
+  ...LIFT.slice(0, 9).flatMap(split),
   ["Mission Manager ①: 서비스·액션 원리 + 실습 1 인터페이스 패키지", RM],
   ["Mission Manager ②: 실습 2 노드 작성 + 실습 3 동작 확인", RM],
-  ["10일차 협로 튜닝·금지구역·이중 안전", RA], ["11일차 작업 계획과 조건 기반 경로 선택", RA],
-  ["12일차 임무 상태 기계와 작업 실행기 (M4)", RA], ["13일차 LLM AI Agent 와 산업 Task 흐름", RA],
-  ["14일차 PDE 와 다중 AMR 교통 제어 (M5)", RA], ["15일차 엘리베이터 연동과 층간 이송 완성 (M6)", RA],
+  ...LIFT.slice(9).flatMap(split),
 ];
-const START = new Date(2026, 9, 29);
+// 월~목만 새 진도, 금요일은 밀린 것·복습, 주말·공휴일은 쉼
+const HOLIDAYS = ["2026-12-25", "2027-01-01"];
+const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const days = [];
-for (let d = new Date(START); days.length < Math.max(AI.length, ROS.length); d.setDate(d.getDate() + 1)) {
-  if (d.getDay() === 0 || d.getDay() === 6) continue;
-  days.push(new Date(d));
+for (let d = new Date(2026, 9, 29, 12), ai = 0, ros = 0; ai < AI.length || ros < ROS.length; d.setDate(d.getDate() + 1)) {
+  const wd = d.getDay();
+  if (wd === 0 || wd === 6 || HOLIDAYS.includes(ymd(d))) continue;
+  days.push(wd === 5 ? { date: new Date(d), buffer: true } : { date: new Date(d), ai: AI[ai++], ros: ROS[ros++] });
 }
-const KEY = "study-wbs-v1";
+document.getElementById("range").textContent =
+  `${ymd(days[0].date)} ~ ${ymd(days[days.length - 1].date)} · 월~목 진도, 금요일은 밀린 것·복습`;
+
+const KEY = "study-wbs-v2";
 let state = {};
 try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 const fmt = d => `${d.getMonth()+1}/${d.getDate()} (${"일월화수목금토"[d.getDay()]})`;
-const iso = d => d.toISOString().slice(0, 10);
-const todayIso = iso(new Date(new Date().setHours(12)));
+const today = ymd(new Date());
 
 const list = document.getElementById("list");
-let weekEl;
-days.forEach((d, i) => {
-  const w = Math.floor(i / 5);
-  if (i % 5 === 0) {
+let weekEl, w = -1, en = 0;
+days.forEach(({ date, buffer, ai, ros }, i) => {
+  if (!weekEl || date.getDay() === 1) {
+    w++;
     weekEl = document.createElement("section");
     weekEl.className = "week";
-    weekEl.innerHTML = `<h2>${w + 1}주차 · ${fmt(d)} ~</h2>`;
+    weekEl.innerHTML = `<h2>${w + 1}주차 · ${fmt(date)} ~</h2>`;
     list.appendChild(weekEl);
   }
+  // 영어 자료는 그날 진도에 맞춘다: 1~4주 순서대로 → contest_mail_agent 기간 → ROS만 남은 기간
+  if (!buffer) en = !ai ? 5 : AI.indexOf(ai) >= 20 ? 4 : Math.min(w, 3);
   const tasks = [
-    ["en", "EN", `영어 30분 — ${EN_WEEK[Math.min(w, EN_WEEK.length - 1)]}`],
-    AI[i] && ["ai", "AI", `${AI[i]} <small>· ${i < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>`],
-    ROS[i] && ["ros", "ROS", `${ROS[i][0]} <small>· ${ROS[i][1]}</small>`],
+    ["en", "EN", `영어 30분 — ${EN_WEEK[en]}`],
+    buffer && ["rev", "복습", "새 진도 없음 — 이번 주 밀린 것 따라잡기, 막힌 부분 다시 보기"],
+    ai && ["ai", "AI", `${ai} <small>· ${AI.indexOf(ai) < 20 ? "AI_Agent_실습교재" : "contest_mail_agent"}</small>`],
+    ros && ["ros", "ROS", `${ros[0]} <small>· ${ros[1]}</small>`],
   ].filter(Boolean);
   const el = document.createElement("div");
-  el.className = "day" + (iso(new Date(d.setHours(12))) === todayIso ? " today" : "");
-  el.innerHTML = `<header>Day ${i + 1}<span>${fmt(d)}</span></header>` + tasks.map(([c, t, txt]) => {
-    const id = `${i}-${c}`;
+  el.className = "day" + (buffer ? " buffer" : "") + (ymd(date) === today ? " today" : "");
+  el.innerHTML = `<header>${fmt(date)}<span>${buffer ? "복습일" : ""}</span></header>` + tasks.map(([c, t, txt]) => {
+    const id = `${ymd(date)}-${c}`;
     return `<label class="${state[id] ? "done" : ""}"><input type="checkbox" data-id="${id}" ${state[id] ? "checked" : ""}>
       <span class="txt"><span class="tag ${c}">${t}</span> ${txt}</span></label>`;
   }).join("");
