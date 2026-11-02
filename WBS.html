@@ -85,8 +85,8 @@ const AI = [
   "contest_mail_agent ⑤: Gmail 앱 비밀번호로 실제 발송(승인 y), checklist.md 체크",
 ];
 // 실습 파일 열기: PDF·HTML 은 브라우저로, .md·.py 는 VS Code 로 연다
-const AI_DIR = "C:/Users/jiyjj/OneDrive/바탕 화면/Visol_KUKBI/jiy/8.ai-agent-40h/";
-const ROS_DIR = "C:/VISOL-FINAL/";
+const AI_DIR = "C:/Visol_KUKBI/jiy/8.ai-agent-40h/";
+const ROS_DIR = "C:/Visol_KUKBI/VISOL-FINAL/";
 const fileUrl = (p, hash = "") => "file:///" + encodeURI(p) + hash;
 const vscode = p => "vscode://file/" + encodeURI(p);
 const AI_FILES = [
@@ -151,7 +151,7 @@ const ROS = [
 // 매일 공부: 월~토 진도, 일요일은 밀린 것·복습
 const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const days = [];
-for (let d = new Date(2026, 9, 29, 12), n = 0; n < Math.max(AI.length, ROS.length, EN_LESSONS.length); d.setDate(d.getDate() + 1)) {
+for (let d = new Date(2026, 10, 2, 12), n = 0; n < Math.max(AI.length, ROS.length, EN_LESSONS.length); d.setDate(d.getDate() + 1)) {
   days.push(d.getDay() === 0 ? { date: new Date(d), buffer: true }
     : { date: new Date(d), ai: AI[n], aiFiles: AI_FILES[n], ros: ROS[n], lesson: EN_LESSONS[n++] });
 }
