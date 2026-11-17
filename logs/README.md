@@ -22,3 +22,4 @@
 | [2026-11-12](2026-11-12.md) | RAG 사내 문서 Q&A(Hit Rate@4 100%·@1 83%, 출처 표시), ROS 2 Jazzy 설치와 통신 4가지 확인, 영어 Housemates |
 | [2주차 정리](week2.md) | 11/09 ~ 11/15 주간 요약 |
 | [2026-11-16](2026-11-16.md) | LangGraph 이론과 경비 결재 그래프 실행(조건 엣지·루프·리듀서), ROS 센서 특성·SLAM·Nav2·Fleet 개념, 영어 Moving house |
+| [2026-11-17](2026-11-17.md) | LangGraph ② 이론(LLM 판단·ReAct·체크포인터·interrupt, CS 에이전트 설계도), ROS project_lift 환경과 TurtleBot4 센서 관찰, 영어 Phone habits |
