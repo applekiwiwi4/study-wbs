@@ -24,3 +24,4 @@
 | [2026-11-16](2026-11-16.md) | LangGraph 이론과 경비 결재 그래프 실행(조건 엣지·루프·리듀서), ROS 센서 특성·SLAM·Nav2·Fleet 개념, 영어 Moving house |
 | [2026-11-17](2026-11-17.md) | LangGraph ② 이론(LLM 판단·ReAct·체크포인터·interrupt, CS 에이전트 설계도), ROS project_lift 환경과 TurtleBot4 센서 관찰, 영어 Phone habits |
 | [2026-11-18](2026-11-18.md) | LangGraph CS 에이전트(분류→주문 조회→검색→초안→승인, 대화 기억·interrupt), ROS QoS·이중 안전 배선·rclpy 골격, 영어 Naps |
+| [2026-11-19](2026-11-19.md) | GraphRAG 이론(지식그래프·Cypher·템플릿 질의와 Text2Cypher), ROS amr_basics 안전·순찰·상태 노드와 최종단 배선 시험, 영어 Relaxing |
