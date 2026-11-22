@@ -25,3 +25,6 @@
 | [2026-11-17](2026-11-17.md) | LangGraph ② 이론(LLM 판단·ReAct·체크포인터·interrupt, CS 에이전트 설계도), ROS project_lift 환경과 TurtleBot4 센서 관찰, 영어 Phone habits |
 | [2026-11-18](2026-11-18.md) | LangGraph CS 에이전트(분류→주문 조회→검색→초안→승인, 대화 기억·interrupt), ROS QoS·이중 안전 배선·rclpy 골격, 영어 Naps |
 | [2026-11-19](2026-11-19.md) | GraphRAG 이론(지식그래프·Cypher·템플릿 질의와 Text2Cypher), ROS amr_basics 안전·순찰·상태 노드와 최종단 배선 시험, 영어 Relaxing |
+| [2026-11-20](2026-11-20.md) | GraphRAG 실습 ① NetworkX 제품 지식그래프(노드 24·관계 39, 품질팀 질문 3개), ROS Header·Action·Executor·Launch 이론과 amr_interfaces, 영어 Rain |
+| [2026-11-21](2026-11-21.md) | GraphRAG 실습 ② Neo4j·Cypher·Text2Cypher와 에이전트 연결, ROS 거리 주행 Action·basics.launch·bag 기록(M1), 영어 Hot weather |
+| [3주차 정리](week3.md) | 11/16 ~ 11/22 주간 요약 |
