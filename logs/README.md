@@ -28,3 +28,4 @@
 | [2026-11-20](2026-11-20.md) | GraphRAG 실습 ① NetworkX 제품 지식그래프(노드 24·관계 39, 품질팀 질문 3개), ROS Header·Action·Executor·Launch 이론과 amr_interfaces, 영어 Rain |
 | [2026-11-21](2026-11-21.md) | GraphRAG 실습 ② Neo4j·Cypher·Text2Cypher와 에이전트 연결, ROS 거리 주행 Action·basics.launch·bag 기록(M1), 영어 Hot weather |
 | [3주차 정리](week3.md) | 11/16 ~ 11/22 주간 요약 |
+| [2026-11-23](2026-11-23.md) | n8n 업무 자동화 이론(트리거·노드·아이템·표현식, 판단은 파이썬 API·연결은 n8n), ROS 센서 처리 파이프라인·안전 필드·IMU·영상 변환, 영어 Autumn |
