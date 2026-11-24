@@ -29,3 +29,4 @@
 | [2026-11-21](2026-11-21.md) | GraphRAG 실습 ② Neo4j·Cypher·Text2Cypher와 에이전트 연결, ROS 거리 주행 Action·basics.launch·bag 기록(M1), 영어 Hot weather |
 | [3주차 정리](week3.md) | 11/16 ~ 11/22 주간 요약 |
 | [2026-11-23](2026-11-23.md) | n8n 업무 자동화 이론(트리거·노드·아이템·표현식, 판단은 파이썬 API·연결은 n8n), ROS 센서 처리 파이프라인·안전 필드·IMU·영상 변환, 영어 Autumn |
+| [2026-11-24](2026-11-24.md) | n8n 문의 접수 자동화(FastAPI로 에이전트 공개, Webhook→에이전트→IF→Discord 긴급 알림), ROS LiDAR 방향별 거리·IMU 감시·RGB-D 뷰어와 sensors.launch, 영어 Sunshine |
