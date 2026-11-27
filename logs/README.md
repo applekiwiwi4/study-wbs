@@ -32,3 +32,4 @@
 | [2026-11-24](2026-11-24.md) | n8n 문의 접수 자동화(FastAPI로 에이전트 공개, Webhook→에이전트→IF→Discord 긴급 알림), ROS LiDAR 방향별 거리·IMU 감시·RGB-D 뷰어와 sensors.launch, 영어 Sunshine |
 | [2026-11-25](2026-11-25.md) | Dify 이론(지식베이스=화면 RAG, Chatflow↔CS 에이전트), ROS SLAM 구조·점유 격자·REP-105·지도 원점 맞추기, 해결 못한 것 모음, 영어 Driving |
 | [2026-11-26](2026-11-26.md) | Dify 고객 챗봇(지식베이스 하이브리드 검색, 질문 분류→주문 조회 API/문서 검색 Chatflow, 웹앱 공개), ROS 프로젝트 월드·SLAM 1층 지도·원점 정렬·GIMP 후처리·치수 검수(M2), 영어 Airports |
+| [2026-11-27](2026-11-27.md) | 배포·품질·포트폴리오 이론(가짜 LLM 테스트, 보안 점검표, README 순서), ROS Visual SLAM·시맨틱 맵·핀홀 좌표 계산·YOLO, 영어 Cities |
